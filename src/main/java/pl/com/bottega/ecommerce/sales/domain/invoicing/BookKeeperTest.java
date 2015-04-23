@@ -106,4 +106,32 @@ public class BookKeeperTest {
 
 		assertThat(result, is(0));
 	}
+
+	@Test
+	public void testCase4_IfNoPositionInvoiceRequested_notCallCalculateTax() {
+
+		Id id = new Id("1");
+		Money moneyEveryItem = new Money(1);
+		ProductType productTypeEveryItem = ProductType.FOOD;
+		ClientData clientData = new ClientData(id, "klient");
+		ProductData productData = new ProductData(id, moneyEveryItem,
+				"Faktura", productTypeEveryItem, new Date());
+		RequestItem requestItem = new RequestItem(productData, 4,
+				moneyEveryItem);
+
+		InvoiceFactory mockInvoiceFactory = mock(InvoiceFactory.class);
+		bookKeeper = new BookKeeper(mockInvoiceFactory);
+		when(mockInvoiceFactory.create(clientData)).thenReturn(
+				new Invoice(id, clientData));
+		TaxPolicy taxPolicy = mock(TaxPolicy.class);
+		when(taxPolicy.calculateTax(productTypeEveryItem, moneyEveryItem))
+				.thenReturn(new Tax(moneyEveryItem, "spis"));
+
+		InvoiceRequest invoiceRequest = new InvoiceRequest(clientData);
+
+		Invoice invoiceResult = bookKeeper.issuance(invoiceRequest, taxPolicy);
+
+		Mockito.verify(taxPolicy, Mockito.times(0)).calculateTax(
+				productTypeEveryItem, moneyEveryItem);
+	}
 }
