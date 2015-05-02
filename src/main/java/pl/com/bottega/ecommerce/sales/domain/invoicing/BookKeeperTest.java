@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
 import java.util.Date;
 
-
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -41,8 +40,8 @@ public class BookKeeperTest {
 		when(taxPolicy.calculateTax(ProductType.FOOD, money)).thenReturn(
 				new Tax(money, "spis"));
 
-		ProductData productData = new ProductData(id, money, "Faktura",
-				ProductType.FOOD, new Date(0));
+		ProductData productData = new ProductDataBuilder().withPrice(1)
+				.withProductType(ProductType.FOOD).build();
 
 		RequestItem requestItem = new RequestItem(productData, 20, money);
 		invoiceRequest.add(requestItem);
@@ -53,7 +52,6 @@ public class BookKeeperTest {
 		assertThat(result, is(1));
 
 	}
-
 
 	@Test
 	public void testcase_2_IFPositionInvoiceRequested_callCalculateTaxTwoTimes() {
@@ -98,8 +96,8 @@ public class BookKeeperTest {
 		TaxPolicy taxPolicy = mock(TaxPolicy.class);
 		when(taxPolicy.calculateTax(ProductType.FOOD, money)).thenReturn(
 				new Tax(money, "opis"));
-		ProductData productData = new ProductData(id, money, "Faktura",
-				ProductType.FOOD, new Date());
+		ProductData productData = new ProductDataBuilder().withPrice(1)
+				.withProductType(ProductType.FOOD).build();
 
 		Invoice invoiceResult = bookKeeper.issuance(invoiceRequest, taxPolicy);
 		int result = invoiceResult.getItems().size();
