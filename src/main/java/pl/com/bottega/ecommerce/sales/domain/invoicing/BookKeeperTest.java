@@ -22,7 +22,7 @@ public class BookKeeperTest {
 		Money money = new Money(20);
 		Id id = new Id("1");
 
-		ClientData clientData = new ClientData(id, "klient");
+		ClientData clientData = new ClientDataBuilder().build();
 
 		BookKeeper book;
 
@@ -57,7 +57,7 @@ public class BookKeeperTest {
 		Id id = new Id("1");
 		Money moneyEveryItem = new Money(1);
 		ProductType productTypeEveryItem = ProductType.FOOD;
-		ClientData clientData = new ClientData(id, "klient");
+		ClientData clientData = new ClientDataBuilder().build();
 		ProductData productData = new ProductDataBuilder().withPrice(20)
 				.withProductType(ProductType.FOOD).build();
 		RequestItem requestItem = new RequestItemBuilder()
@@ -87,7 +87,7 @@ public class BookKeeperTest {
 		Money money = new Money(1);
 		InvoiceFactory mockInvoiceFactory = mock(InvoiceFactory.class);
 		bookKeeper = new BookKeeper(mockInvoiceFactory);
-		ClientData clientData = new ClientData(id, "klient");
+		ClientData clientData = new ClientDataBuilder().build();
 		when(mockInvoiceFactory.create(clientData)).thenReturn(
 				new Invoice(id, clientData));
 		InvoiceRequest invoiceRequest = new InvoiceRequest(clientData);
@@ -109,7 +109,7 @@ public class BookKeeperTest {
 		Id id = new Id("1");
 		Money moneyEveryItem = new Money(1);
 		ProductType productTypeEveryItem = ProductType.FOOD;
-		ClientData clientData = new ClientData(id, "klient");
+		ClientData clientData = new ClientDataBuilder().build();
 		ProductData productData = new ProductDataBuilder().withPrice(20)
 				.withProductType(ProductType.FOOD).build();
 		new RequestItemBuilder().withProductData(productData).witTotalCost(4)
