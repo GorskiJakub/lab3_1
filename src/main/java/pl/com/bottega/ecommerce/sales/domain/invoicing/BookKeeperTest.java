@@ -2,14 +2,13 @@ package pl.com.bottega.ecommerce.sales.domain.invoicing;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
+import static org.hamcrest.Matchers.*;
 import java.util.Date;
+
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import pl.com.bottega.cqrs.command.handler.*;
-import pl.com.bottega.ecommerce.canonicalmodel.*;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductData;
@@ -54,6 +53,7 @@ public class BookKeeperTest {
 		assertThat(result, is(1));
 
 	}
+
 
 	@Test
 	public void testcase_2_IFPositionInvoiceRequested_callCalculateTaxTwoTimes() {
